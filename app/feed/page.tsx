@@ -8,17 +8,6 @@ import Form from "@/components/form";
 import FeedCard from "@/components/feedcard";
 
 const Feed = () => {
-  const [image, setImage] = useState(null);
-  const [caption, setCaption] = useState("");
-
-  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files ? [0] : null;
-    // Handle the selected image here, you can display a preview or upload it to a server.
-  };
-
-  const handleCaptionChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setCaption(e.target.value);
-  };
 
   return (
     <div className="w-full flex flex-row flex-wrap">
