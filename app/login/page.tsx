@@ -1,10 +1,48 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter(); // Access the router instance
+
+  const handleLogin = async () => {
+    const payload = {
+      email: email,
+      password: password,
+    };
+
+    try {
+      const response = await fetch("http://localhost:8080/api/v1/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.status === 200) {
+        const data = await response.json();
+        const token = data.token;
+
+        Cookies.set("token", token);
+
+        router.push("/feed");
+      } else {
+        alert("Login failed.");
+        console.error("Login failed");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <div className="w-full flex flex-wrap">
       <div className="w-full md:w-1/2 flex flex-col">
@@ -12,7 +50,6 @@ const Login = () => {
           <a href="#" className="bg-black text-white font-bold text-xl p-4">
             TapirGram
           </a>
-
         </div>
         <motion.div
           className="flex flex-col justify-center md:justify-start my-auto pt-8 md:pt-0 px-8 md:px-24 lg:px-32"
@@ -39,6 +76,8 @@ const Login = () => {
                 id="email"
                 placeholder="your@email.com"
                 className="shadow appearance-none border w-full p-3 rounded-3xl text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </motion.div>
             <motion.div
@@ -55,14 +94,16 @@ const Login = () => {
                 id="password"
                 placeholder="Password"
                 className="shadow appearance-none border w-full p-3 rounded-3xl text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </motion.div>
-         <Link href='/feed' className="text-center bg-black border rounded-3xl text-white font-bold text-lg hover:bg-gray-700 p-2 mt-8">
-            <motion.input
-              type="button"
-              defaultValue="Log In"
-              className=""
-            />
+            <Link
+              onClick={handleLogin} // Tambahkan event handler untuk login
+              className="text-center bg-black border rounded-3xl text-white font-bold text-lg hover:bg-gray-700 p-2 mt-8"
+              href={""}
+            >
+              <motion.input type="button" defaultValue="Log In" className="" />
             </Link>
           </form>
           <motion.div
