@@ -6,7 +6,6 @@ import Link from "next/link";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
-
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,15 +29,14 @@ const Login = () => {
       if (response.status === 200) {
         const data = await response.json();
         const token = data.token;
-
-        Cookies.set("token", token);
-
+        Cookies.set("token", token);  
         router.push("/feed");
       } else {
         alert("Login failed.");
         console.error("Login failed");
       }
     } catch (error) {
+      alert(error);
       console.error("Error:", error);
     }
   };

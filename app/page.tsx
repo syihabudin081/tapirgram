@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Feed from './feed/page';
 import Cookies from 'js-cookie'; // Import library js-cookie
+import Login from './login/page';
 
 export default function Home() {
   // Cek apakah token ada di cookie
@@ -17,7 +18,7 @@ export default function Home() {
     // Jika tidak ada token, tampilkan halaman login
     return (
       <main className="min-h-screen">
-        {/* Tampilkan halaman login di sini */}
+        <Login/>
       </main>
     );
   }

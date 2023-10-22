@@ -1,13 +1,50 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Register = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [age, setAge] = useState("");
+  const [username, setUsername] = useState("");
+  const router = useRouter(); // Access the router instance
+
+  const handleRegister = async () => {
+    const payload = {
+      email: email,
+      password: password,
+      age: age,
+      username: username,
+    };
+
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/v1/users/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+      if (response.status === 200) {
+        router.push("/login");
+      } else {
+        alert("Register failed.");
+        console.error("Register failed");
+      }
+    } catch (error) {
+      alert(error);
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <div className="w-full flex flex-wrap">
-        
       <div className="w-full md:w-1/2 flex flex-col">
         <motion.div
           className="flex flex-col justify-center md:justify-start my-auto pt-8 md:pt-0 px-8 md:px-24 lg:px-32"
@@ -32,6 +69,8 @@ const Register = () => {
               <input
                 type="email"
                 id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
                 className="shadow appearance-none border w-full p-3 rounded-3xl text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
               />
@@ -49,6 +88,8 @@ const Register = () => {
                 type="password"
                 id="password"
                 placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="shadow appearance-none border w-full p-3 rounded-3xl text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
               />
             </motion.div>
@@ -65,6 +106,8 @@ const Register = () => {
                 type="number"
                 id="age"
                 placeholder="12"
+                value={age}
+                onChange={(e) => setAge(e.target.value)}
                 className="shadow appearance-none border w-full p-3 rounded-3xl text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
               />
             </motion.div>
@@ -81,12 +124,15 @@ const Register = () => {
                 type="text"
                 id="username"
                 placeholder="tapiresque"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 className="shadow appearance-none border w-full p-3 rounded-3xl text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
               />
             </motion.div>
             <motion.input
               type="submit"
-              defaultValue="Log In"
+              defaultValue="Register"
+              onClick={handleRegister}
               className="bg-black border rounded-3xl text-white font-bold text-lg hover:bg-gray-700 p-2 mt-8"
             />
           </form>
@@ -97,7 +143,7 @@ const Register = () => {
             className="text-center pt-12 pb-12"
           >
             <p>
-            Already have an account?&nbsp;{" "}
+              Already have an account?&nbsp;{" "}
               <Link href="/login" className="underline font-semibold">
                 Login.
               </Link>

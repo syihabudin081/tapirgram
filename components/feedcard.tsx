@@ -1,12 +1,28 @@
-'use client'
-import React, { useState } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Comme } from "next/font/google";
 import Comments from "./comments";
 import CommentsFeed from "./comments";
+import Cookies from "js-cookie";
 
-function FeedCard() {
 
+interface FeedItem {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  title: string;
+  photo_url: string;
+  caption: string;
+  UserID: number;
+  User: any; 
+}
+
+interface FeedCardProps {
+  data: FeedItem;
+}
+
+function FeedCard({ data }: FeedCardProps) {
   const [isCommentVisible, setCommentVisible] = useState(false);
 
   const toggleComment = () => {
@@ -14,20 +30,19 @@ function FeedCard() {
   };
 
   return (
-    <div className="mt-3 bg flex flex-col">
+    <div className="mt-3 bg flex flex-col border  border-gray-700 p-3">
       <div className="mt-3 ">
         <Image
           className=" rounded-t-lg shadow-lg w-full h-auto"
           alt="foto"
-          src="https://images.unsplash.com/photo-1572817519612-d8fadd929b00?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80"
-          width={500}
-          height={600}
+          src={data.photo_url}
+          width={400}
+          height={400}
         />
         <div className="bg-black shadow p-5 pl-0 text-base text-white font-semibold border-b border-gray-700">
-          A Pretty Cool photo from the mountains. Image credit to @danielmirlea
-          on Unsplash.
+          {data.title}
         </div>
-        <div className="bg-black p-2 shadow flex flex-row flex-wrap gap-6 border-b border-gray-700">
+        <div className="bg-black py-2 shadow flex flex-row flex-wrap gap-6 border-b border-gray-700">
           {/* like */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -76,14 +91,10 @@ function FeedCard() {
           </svg>
         </div>
         {/* comment */}
-        {isCommentVisible && (
-        <CommentsFeed/>
-        )}
+        {isCommentVisible && <CommentsFeed />}
       </div>
     </div>
   );
 }
 
 export default FeedCard;
-
-

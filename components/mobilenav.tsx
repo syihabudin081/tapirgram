@@ -1,7 +1,31 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 function MobileNav() {
+  const router = useRouter(); // Access the router instance
+
+  const handleLogout = async () => {
+    await Cookies.remove("token");
+    router.push("/login");
+  };
+
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    const token = Cookies.get("token");
+
+    if (token) {
+      try {
+        const tokenData = JSON.parse(atob(token.split(".")[1]));
+        setUsername(tokenData.username);
+      } catch (error) {
+        console.error("Error parsing token:", error);
+      }
+    }
+  }, []);
+
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 border-t border-gray-700 bg-black shadow-lg  rounded-xl">
       <div className="flex justify-evenly items-center p-3 ">
@@ -19,7 +43,7 @@ function MobileNav() {
             stroke="currentColor"
             className="w-8 h-8"
           >
- <path
+            <path
               strokeLinecap="round"
               strokeLinejoin="round"
               d="M8.625 9.75a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 01.778-.332 48.294 48.294 0 005.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"
@@ -50,7 +74,8 @@ function MobileNav() {
         </a>
         <Link
           className="text-center text-red-500 text-base font-semibold hover:bg-gray-300"
-          href="/login"
+          href=""
+          onClick={handleLogout}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
