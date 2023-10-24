@@ -9,8 +9,8 @@ function CommentsFeed() {
             className="border border-indigo-100 shadow-lg rounded-full first-letter"
             src="/logo.jpg "
             alt="porfile"
-            width={50}
-            height={50}
+            width={32}
+            height={32}
           />
 
           <div className="w-full text-left text-sm text-white">
@@ -18,7 +18,7 @@ function CommentsFeed() {
           </div>
           {/* comments */}
         </div>
-        <div className="text-sm font-normal">
+        <div className="text-sm font-light">
           A Pretty Cool photo from the mountains. Image credit to @danielmirlea
           on Unsplash. A Pretty Cool photo from the mountains. Image credit to
           @danielmirlea on Unsplash.

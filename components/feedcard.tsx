@@ -6,7 +6,6 @@ import Comments from "./comments";
 import CommentsFeed from "./comments";
 import Cookies from "js-cookie";
 
-
 interface FeedItem {
   id: number;
   created_at: string;
@@ -15,7 +14,7 @@ interface FeedItem {
   photo_url: string;
   caption: string;
   UserID: number;
-  User: any; 
+  User: any;
 }
 
 interface FeedCardProps {
@@ -31,16 +30,28 @@ function FeedCard({ data }: FeedCardProps) {
 
   return (
     <div className="mt-3 bg flex flex-col border  border-gray-700 p-3">
-      <div className="mt-3 ">
+      <div className=" ">
+        <div className="flex items-center border-b border-gray-700 pb-2">
+          <Image
+            src="/logo.jpg"
+            className="rounded-full"
+            alt={""}
+            width={32}
+            height={32}
+          />
+          <h1 className="ml-3 text-white font-semibold">
+            {data.User.username}
+          </h1>
+        </div>
         <Image
-          className=" rounded-t-lg shadow-lg w-full h-auto"
+          className=" rounded-t-lg shadow-lg w-full h-200px "
           alt="foto"
           src={data.photo_url}
-          width={400}
-          height={400}
+          width={200}
+          height={200}
         />
         <div className="bg-black shadow p-5 pl-0 text-base text-white font-semibold border-b border-gray-700">
-          {data.title}
+          {data.caption}
         </div>
         <div className="bg-black py-2 shadow flex flex-row flex-wrap gap-6 border-b border-gray-700">
           {/* like */}

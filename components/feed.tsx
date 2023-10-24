@@ -33,6 +33,7 @@ function Feed() {
 
         if (response.ok) {
           const data = await response.json();
+         
           setData(data); 
         } else {
        
