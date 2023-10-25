@@ -102,7 +102,7 @@ function FeedCard({ data }: FeedCardProps) {
           </svg>
         </div>
         {/* comment */}
-        {isCommentVisible && <CommentsFeed />}
+        {isCommentVisible && <CommentsFeed photoId={data.id} />}
       </div>
     </div>
   );
