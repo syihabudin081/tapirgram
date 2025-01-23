@@ -29,7 +29,7 @@ const Login = () => {
       if (response.status === 200) {
         const data = await response.json();
         const token = data.token;
-        Cookies.set("token", token);  
+        Cookies.set("token", token);
         router.push("/feed");
       } else {
         alert("Login failed.");
@@ -55,7 +55,8 @@ const Login = () => {
           animate={{ opacity: 1 }} // Set animation when the component is in view
           transition={{ duration: 1 }} // Animation duration in seconds
         >
-          <p className="text-center text-2xl">Welcome, Tapirers.</p>
+          <p className="text-center text-2xl">Welcome, Tapirers.</p>{" "}
+          {/* buset tapipers gatuh*/}
           <form
             className="flex flex-col pt-3 md:pt-8"
             onSubmit={(e) => e.preventDefault()}
